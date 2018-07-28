@@ -1,0 +1,581 @@
+---
+title: "VideoGameSales1"
+author: "Sahil Garg"
+date: "29 December 2017"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Video Game Sales
+
+## About Video Games
+
+A video game is an electronic game that can be played on a computing device, such as a personal computer, gaming console or mobile phone. Depending on the platform, video games can be subcategorized into computer games and console games. In recent years however, the emergence of social networks, smartphones and tablets introduced new categories such as mobile and social games. Video games have come a long way since the first games emerged in the 1970s. Today's video games offer photorealistic graphics and simulate reality to a degree which is astonishing in many cases.
+
+## About Video Game Industry
+
+The video game industry is the economic sector involved in the development, marketing, and monetization of video games. It encompasses dozens of job disciplines and its component parts employ thousands of people worldwide.
+
+The computer and video game industry has grown from focused markets to mainstream. They took in about US$9.5 billion in the US in 2007, 11.7 billion in 2008, and 25.1 billion in 2010 (ESA annual report).
+
+Modern personal computers owe many advancements and innovations to the game industry: sound cards, graphics cards and 3D graphic accelerators, faster CPUs, and dedicated co-processors like PhysX are a few of the more notable improvements.
+
+## Reading the data
+
+Read your dataset in R and visualize the length and breadth of your dataset.
+
+```{r , message=FALSE, warning=FALSE}
+setwd("D:/manipal-year2/internship/IIML_dataAnalytics/project/videogamesales")
+game.df <- read.csv(paste("vgsales.csv",sep=""))
+View(game.df)
+head(game.df)
+dim(game.df)
+```
+
+##  Describe each variable
+
+Create a descriptive statistics (min, max, median etc) of each variable.
+
+```{r , message=FALSE, warning=FALSE}
+attach(game.df)
+summary(game.df)
+library(psych)
+describe(game.df)
+
+str(game.df)
+
+min(NA_Sales)
+max(NA_Sales)
+mean(NA_Sales)
+median(NA_Sales)
+
+min(EU_Sales)
+max(EU_Sales)
+mean(EU_Sales)
+median(EU_Sales)
+
+min(JP_Sales)
+max(JP_Sales)
+mean(JP_Sales)
+median(JP_Sales)
+
+min(Other_Sales)
+max(Other_Sales)
+mean(Other_Sales)
+median(Other_Sales)
+
+min(Global_Sales)
+max(Global_Sales)
+mean(Global_Sales)
+median(Global_Sales)
+```
+
+## Contingency Tables
+
+Create one-way contingency tables for the categorical variables in your dataset.
+
+```{r , message=FALSE, warning=FALSE}
+myTable <- table(Platform)
+myTable
+prop.table(myTable)*100
+myTable <- table(Year)
+myTable
+prop.table(myTable)*100
+myTable <- table(Genre)
+myTable
+prop.table(myTable)*100
+myTable <- table(Publisher)
+myTable
+prop.table(myTable)*100
+```
+
+## 2-way Contingency Tables
+
+Create two-way contingency tables for the categorical variables in your dataset.
+
+```{r , message=FALSE, warning=FALSE}
+myTable <-xtabs(~Platform+Year)
+library(gmodels)
+addmargins(myTable)
+myTable
+prop.table(myTable,1)
+prop.table(myTable,2)
+
+myTable <-xtabs(~Platform+Genre)
+addmargins(myTable)
+myTable
+prop.table(myTable,1)
+prop.table(myTable,2)
+
+myTable <-xtabs(~Platform+Publisher)
+addmargins(myTable)
+myTable
+prop.table(myTable,1)
+prop.table(myTable,2)
+
+myTable <-xtabs(~Genre+Year)
+addmargins(myTable)
+myTable
+prop.table(myTable,1)
+prop.table(myTable,2)
+
+myTable <-xtabs(~Publisher+Year)
+addmargins(myTable)
+myTable
+prop.table(myTable,1)
+prop.table(myTable,2)
+
+myTable <-xtabs(~Genre+Publisher)
+addmargins(myTable)
+myTable
+prop.table(myTable,1)
+prop.table(myTable,2)
+```
+
+## BoxPlots
+
+Draw a  boxplot of the variables that belong to your study.
+
+```{r , message=FALSE, warning=FALSE}
+boxplot(NA_Sales,horizontal = TRUE,
+        xlab = "NA Sales in millions",
+        main = "North America Sales")
+
+boxplot(EU_Sales,horizontal = TRUE,
+        xlab = "EU Sales in millions",
+        main = "Europe Sales")
+
+boxplot(JP_Sales,horizontal = TRUE,
+        xlab = "JP Sales in millions",
+        main = "Japan Sales")
+
+boxplot(Other_Sales,horizontal = TRUE,
+        xlab = "Other Sales in millions",
+        main = "Other Sales")
+
+boxplot(Global_Sales,horizontal = TRUE,
+        xlab = "Global Sales in millions",
+        main = "Global Sales")
+
+boxplot(NA_Sales~Platform,horizontal = TRUE,
+        xlab = "NA Sales in millions",
+        ylab = "Platform",
+        main = "North America Sales based on platform")
+
+boxplot(NA_Sales~Year,horizontal = TRUE,
+        xlab = "NA Sales in millions",
+        ylab = "Year",
+        main = "North America Sales based on year")
+
+boxplot(NA_Sales~Genre,horizontal = TRUE,
+        xlab = "NA Sales in millions",
+        ylab = "Genre",
+        main = "North America Sales based on genre")
+
+boxplot(NA_Sales~Publisher,horizontal = TRUE,
+        xlab = "NA Sales in millions",
+        ylab = "Publisher",
+        main = "North America Sales based on publisher")
+
+boxplot(EU_Sales~Platform,horizontal = TRUE,
+        xlab = "EU Sales in millions",
+        ylab = "Platform",
+        main = "Europe Sales based on platform")
+
+boxplot(EU_Sales~Year,horizontal = TRUE,
+        xlab = "EU Sales in millions",
+        ylab = "Year",
+        main = "Europe Sales based on year")
+
+boxplot(EU_Sales~Genre,horizontal = TRUE,
+        xlab = "EU Sales in millions",
+        ylab = "Genre",
+        main = "Europe Sales based on genre")
+
+boxplot(EU_Sales~Publisher,horizontal = TRUE,
+        xlab = "EU Sales in millions",
+        ylab = "Publisher",
+        main = "Europe Sales based on publisher")
+
+boxplot(JP_Sales~Platform,horizontal = TRUE,
+        xlab = "JP Sales in millions",
+        ylab = "Platform",
+        main = "Japan Sales based on platform")
+
+boxplot(JP_Sales~Year,horizontal = TRUE,
+        xlab = "JP Sales in millions",
+        ylab = "Year",
+        main = "Japan Sales based on year")
+
+boxplot(JP_Sales~Genre,horizontal = TRUE,
+        xlab = "JP Sales in millions",
+        ylab = "Genre",
+        main = "Japan Sales based on genre")
+
+boxplot(JP_Sales~Publisher,horizontal = TRUE,
+        xlab = "JP Sales in millions",
+        ylab = "Publisher",
+        main = "Japan Sales based on publisher")
+
+boxplot(Other_Sales~Platform,horizontal = TRUE,
+        xlab = "Other Sales in millions",
+        ylab = "Platform",
+        main = "Other Sales based on platform")
+
+boxplot(Other_Sales~Year,horizontal = TRUE,
+        xlab = "Other Sales in millions",
+        ylab = "Year",
+        main = "Other Sales based on year")
+
+boxplot(Other_Sales~Genre,horizontal = TRUE,
+        xlab = "Other Sales in millions",
+        ylab = "Genre",
+        main = "Other Sales based on genre")
+
+boxplot(Other_Sales~Publisher,horizontal = TRUE,
+        xlab = "Global Sales in millions",
+        ylab = "Publisher",
+        main = "Global Sales based on publisher")
+
+boxplot(Global_Sales~Platform,horizontal = TRUE,
+        xlab = "Global Sales in millions",
+        ylab = "Platform",
+        main = "Global Sales based on platform")
+
+boxplot(Global_Sales~Year,horizontal = TRUE,
+        xlab = "Global Sales in millions",
+        ylab = "Year",
+        main = "Global Sales based on year")
+
+boxplot(Global_Sales~Genre,horizontal = TRUE,
+        xlab = "Global Sales in millions",
+        ylab = "Genre",
+        main = "Global Sales based on genre")
+
+boxplot(Global_Sales~Publisher,horizontal = TRUE,
+        xlab = "Global Sales in millions",
+        ylab = "Publisher",
+        main = "Global Sales based on publisher")
+```
+
+## Histograms
+
+Draw Histograms for your suitable data fields.
+
+```{r ,message=FALSE,error=FALSE}
+hist(NA_Sales,
+        xlab = "NA Sales in millions",
+        ylab = "Count",
+        xlim = c(0,10),
+        col = "lightblue",
+        main = "North America Sales")
+hist(NA_Sales,
+        xlab = "NA Sales in millions",
+        ylab = "Count",
+        col = "lightblue",
+        main = "North America Sales")
+
+hist(EU_Sales,
+        xlab = "EU Sales in millions",
+        ylab = "Count",
+        xlim = c(0,10),
+        col = "lightblue",
+        main = "Europe Sales")
+hist(EU_Sales,
+        xlab = "EU Sales in millions",
+        ylab = "Count",
+        col = "lightblue",
+        main = "Europe Sales")
+
+hist(JP_Sales,
+        xlab = "JP Sales in millions",
+        ylab = "Count",
+        xlim = c(0,10),
+        col = "lightblue",
+        main = "Japan Sales")
+hist(JP_Sales,
+        xlab = "JP Sales in millions",
+        ylab = "Count",
+        col = "lightblue",
+        main = "Japan Sales")
+
+hist(Other_Sales,
+        xlab = "Other Sales in millions",
+        ylab = "Count",
+        xlim = c(0,10),
+        col = "lightblue",
+        main = "Other Sales")
+hist(Other_Sales,
+        xlab = "Other Sales in millions",
+        ylab = "Count",
+        col = "lightblue",
+        main = "Other Sales")
+
+hist(Global_Sales,
+        xlab = "GLobal Sales in millions",
+        ylab = "Count",
+        xlim = c(0,20),
+        col = "lightblue",
+        main = "Global Sales")
+hist(Global_Sales,
+        xlab = "Global Sales in millions",
+        ylab = "Count",
+        col = "lightblue",
+        main = "Global Sales")
+```
+```{r ,message=FALSE,error=FALSE}
+library(lattice)
+histogram(~NA_Sales|Platform,type = "count")
+histogram(~NA_Sales|Year,type = "count")
+histogram(~NA_Sales|Genre,type = "count")
+histogram(~EU_Sales|Platform,type = "count")
+histogram(~EU_Sales|Year,type = "count")
+histogram(~EU_Sales|Genre,type = "count")
+histogram(~JP_Sales|Platform,type = "count")
+histogram(~JP_Sales|Year,type = "count")
+histogram(~JP_Sales|Genre,type = "count")
+histogram(~Other_Sales|Platform,type = "count")
+histogram(~Other_Sales|Year,type = "count")
+histogram(~Other_Sales|Genre,type = "count")
+histogram(~Global_Sales|Platform,type = "count")
+histogram(~Global_Sales|Year,type = "count")
+histogram(~Global_Sales|Genre,type = "count")
+```
+
+## Plots
+
+Draw suitable plot for your data fields.
+
+```{r ,message=FALSE,error=FALSE}
+plot(NA_Sales,EU_Sales,
+     main = "North America sales vs Europe sales",
+     xlab = "NA Sales",
+     ylab = "EU Sales")
+
+plot(NA_Sales,JP_Sales,
+     main = "North America sales vs Japan sales",
+     xlab = "NA Sales",
+     ylab = "JP Sales")
+
+plot(NA_Sales,Other_Sales,
+     main = "North America sales vs Other sales",
+     xlab = "NA Sales",
+     ylab = "Other Sales")
+
+plot(EU_Sales,JP_Sales,
+     main = "Europe sales vs Japan sales",
+     xlab = "EU Sales",
+     ylab = "JP Sales")
+
+plot(EU_Sales,Other_Sales,
+     main = "Europe sales vs Other sales",
+     xlab = "EU Sales",
+     ylab = "Other Sales")
+
+plot(JP_Sales,Other_Sales,
+     main = "Japan sales vs Other sales",
+     xlab = "JP Sales",
+     ylab = "Other Sales")
+
+plot(Global_Sales,NA_Sales,
+     main = "Global sales vs NA sales",
+     xlab = "Global Sales",
+     ylab = "NA Sales")
+plot(Global_Sales,JP_Sales,
+     main = "Global sales vs Japan sales",
+     xlab = "Global Sales",
+     ylab = "Japan Sales")
+plot(Global_Sales,EU_Sales,
+     main = "Global sales vs Europe sales",
+     xlab = "Global Sales",
+     ylab = "Europe Sales")
+plot(Global_Sales,Other_Sales,
+     main = "Global sales vs Other sales",
+     xlab = "Global Sales",
+     ylab = "Other Sales")
+```
+
+```{r ,message=FALSE,error=FALSE}
+barchart(NA_Sales~Platform)
+barchart(NA_Sales~Genre)
+barchart(NA_Sales~Year)
+
+barchart(EU_Sales~Platform)
+barchart(EU_Sales~Genre)
+barchart(EU_Sales~Year)
+
+barchart(JP_Sales~Platform)
+barchart(JP_Sales~Genre)
+barchart(JP_Sales~Year)
+
+barchart(Other_Sales~Platform)
+barchart(Other_Sales~Genre)
+barchart(Other_Sales~Year)
+
+barchart(Global_Sales~Platform)
+barchart(Global_Sales~Genre)
+barchart(Global_Sales~Year)
+
+bwplot(Platform~NA_Sales,horizontal = TRUE)
+bwplot(Genre~NA_Sales,horizontal = TRUE)
+bwplot(Year~NA_Sales,horizontal = TRUE)
+
+bwplot(Platform~EU_Sales,horizontal = TRUE)
+bwplot(Genre~EU_Sales,horizontal = TRUE)
+bwplot(Year~EU_Sales,horizontal = TRUE)
+
+bwplot(Platform~JP_Sales,horizontal = TRUE)
+bwplot(Genre~JP_Sales,horizontal = TRUE)
+bwplot(Year~JP_Sales,horizontal = TRUE)
+
+bwplot(Platform~Other_Sales,horizontal = TRUE)
+bwplot(Genre~Other_Sales,horizontal = TRUE)
+bwplot(Year~Other_Sales,horizontal = TRUE)
+
+bwplot(Platform~Global_Sales,horizontal = TRUE)
+bwplot(Genre~Global_Sales,horizontal = TRUE)
+bwplot(Year~Global_Sales,horizontal = TRUE)
+```
+
+## Correlation Matrix
+
+Create a correlation matrix.
+
+```{r ,message=FALSE,error=FALSE}
+round(cor(game.df[,7:11]),2)
+library(corrplot)
+corrplot(cor(game.df[,7:11]),method = "circle")
+```
+
+## Corrgram
+
+Visualize your correlation matrix using corrgram.
+
+```{r ,message=FALSE,error=FALSE}
+library(corrgram)
+corrgram(game.df,order=TRUE,
+         lower.panel = panel.shade,
+         upper.panel = panel.pie,
+         text.panel = panel.txt,
+         main = "Corrgram for video game sales"
+         )
+```
+
+## ScatterPlot Matrix
+
+Create a scatter plot matrix for your data set.
+
+```{r ,message=FALSE,error=FALSE}
+library(car)
+scatterplotMatrix(game.df[,c(1,7:11)], spread=FALSE, smoother.args=list(lty=2), main="Scatter Plot Matrix")
+```
+
+## Running some tests
+
+Run a suitable test to check your hypothesis for your suitable assumptions.
+
+```{r ,message=FALSE,error=FALSE}
+cor.test(Rank,NA_Sales)
+cor.test(Rank,EU_Sales)
+cor.test(Rank,JP_Sales)
+cor.test(Rank,Other_Sales)
+cor.test(Rank,Global_Sales)
+```
+```{r ,message=FALSE,error=FALSE}
+cor.test(Global_Sales,NA_Sales)
+cor.test(Global_Sales,EU_Sales)
+cor.test(Global_Sales,JP_Sales)
+cor.test(Global_Sales,Other_Sales)
+
+cor.test(EU_Sales,NA_Sales)
+cor.test(JP_Sales,NA_Sales)
+cor.test(Other_Sales,NA_Sales)
+cor.test(JP_Sales,EU_Sales)
+cor.test(Other_Sales,EU_Sales)
+cor.test(Other_Sales,JP_Sales)
+```
+```{r ,message=FALSE,error=FALSE}
+mytable <- xtabs(~NA_Sales,Platform)
+chisq.test(mytable)
+mytable <- xtabs(~NA_Sales,Year)
+chisq.test(mytable)
+mytable <- xtabs(~NA_Sales,Genre)
+chisq.test(mytable)
+mytable <- xtabs(~NA_Sales,Publisher)
+chisq.test(mytable)
+```
+```{r ,message=FALSE,error=FALSE}
+mytable <- xtabs(~EU_Sales,Platform)
+chisq.test(mytable)
+mytable <- xtabs(~EU_Sales,Year)
+chisq.test(mytable)
+mytable <- xtabs(~EU_Sales,Genre)
+chisq.test(mytable)
+mytable <- xtabs(~EU_Sales,Publisher)
+chisq.test(mytable)
+```
+```{r ,message=FALSE,error=FALSE}
+mytable <- xtabs(~JP_Sales,Platform)
+chisq.test(mytable)
+mytable <- xtabs(~JP_Sales,Year)
+chisq.test(mytable)
+mytable <- xtabs(~JP_Sales,Genre)
+chisq.test(mytable)
+mytable <- xtabs(~JP_Sales,Publisher)
+chisq.test(mytable)
+```
+```{r ,message=FALSE,error=FALSE}
+mytable <- xtabs(~Other_Sales,Platform)
+chisq.test(mytable)
+mytable <- xtabs(~Other_Sales,Year)
+chisq.test(mytable)
+mytable <- xtabs(~Other_Sales,Genre)
+chisq.test(mytable)
+mytable <- xtabs(~Other_Sales,Publisher)
+chisq.test(mytable)
+```
+```{r ,message=FALSE,error=FALSE}
+mytable <- xtabs(~Global_Sales,Platform)
+chisq.test(mytable)
+mytable <- xtabs(~Global_Sales,Year)
+chisq.test(mytable)
+mytable <- xtabs(~Global_Sales,Genre)
+chisq.test(mytable)
+mytable <- xtabs(~Global_Sales,Publisher)
+chisq.test(mytable)
+```
+```{r ,message=FALSE,error=FALSE}
+corr.test(game.df[,c(1,7:11)],use="complete")
+```
+
+## Running T-tests
+
+Run a t-test to analyse your hypothesis.
+
+```{r ,message=FALSE,error=FALSE}
+t.test(NA_Sales,EU_Sales)
+t.test(NA_Sales,JP_Sales)
+t.test(NA_Sales,Other_Sales)
+t.test(NA_Sales,Global_Sales,paired = TRUE)
+
+t.test(EU_Sales,JP_Sales)
+t.test(EU_Sales,Other_Sales)
+t.test(EU_Sales,Global_Sales,paired = TRUE)
+
+t.test(JP_Sales,Other_Sales)
+t.test(JP_Sales,Global_Sales,paired = TRUE)
+
+t.test(Other_Sales,Global_Sales,paired = TRUE)
+```
+```{r ,message=FALSE,error=FALSE}
+t.test(Rank,NA_Sales)
+t.test(Rank,EU_Sales)
+t.test(Rank,JP_Sales)
+t.test(Rank,Other_Sales)
+t.test(Rank,Global_Sales)
+```
+
+Hence, from all the tests that we have carried out, we can find out that, since the p-value is less than 0.05. we can reject the null hypothesis. So, the sales of each region are correlated to each other, as well as to the global sales and to the rank of the game. Also, there lie differences between different regional sales based on year and platform mostly, as seen from the graphs and plots. 
+
